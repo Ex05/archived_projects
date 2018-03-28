@@ -1,0 +1,228 @@
+@ ECHO off 
+
+color a
+
+@ ECHO Herzlich Wilkommen, bei unserem Neuen itcraft-Launcher fuer Minecraft.
+
+@ ECHO.   
+
+@ ECHO Including:
+
+@ ECHO itcraft_Texturepack x512 (1.7.3)
+@ ECHO itcraft_Texturepack x128 (1.7.3)
+@ ECHO Resizable Ram options
+
+@ ECHO.
+
+:42
+CD %AppData%\.minecraft\itcraft\saved_files
+
+IF EXIST chosenRAMsize.txt GOTO :21
+
+IF NOT EXIST chosenRAMsize GOTO :22
+
+:21
+IF EXIST gameType.txt GOTO :23
+
+IF NOT EXIST gameType.txt GOTO :22
+
+:22
+CALL systeminfo | findstr /C:"Gesamter physikalischer Speicher" >MaxRAM.txt
+
+FOR /f "tokens=4" %%i IN (MaxRAM.txt) DO SET bla=%%i 
+
+FOR /f "tokens=1-4 delims=." %%a IN ("%bla%") DO Set WertOhnePunkt=%%a%%b%%c%%d 
+
+@ ECHO Ihr System-Speicher betraegt %WertOhnePunkt%MB bitte waehlen Sie,
+@ ECHO die zu verwaendende RAM Groesse.
+
+@ ECHO.
+
+:j
+@ ECHO 1: 1024 MB
+@ ECHO 2: 2048 MB
+@ ECHO 3: 3072 MB
+@ ECHO 4: 4096 MB
+@ ECHO 5: 5120 MB
+@ ECHO 6: 6142 MB
+@ ECHO 7: Standardgroesse
+
+SET choice=
+SET /p choice=
+
+IF '%choice%' == '1' GOTO :1
+IF '%choice%' == '2' GOTO :2
+IF '%choice%' == '3' GOTO :3
+IF '%choice%' == '4' GOTO :4
+IF '%choice%' == '5' GOTO :5
+IF '%choice%' == '6' GOTO :6
+IF '%choice%' == '7' GOTO :1
+
+:1
+SET ramSize=1024M
+@ ECHO Sie haben %ramSize% RAM gewaehlt.
+GOTO :7
+
+:2
+SET ramSize=2048M
+@ ECHO Sie haben %ramSize% RAM gewaehlt.
+GOTO :7
+
+:3
+SET ramSize=3072M
+@ ECHO Sie haben %ramSize%  RAM gewaehlt.
+GOTO :7
+
+:4
+SET ramSize=4096M
+@ ECHO Sie haben %ramSize% RAM gewaehlt.
+GOTO :7
+
+:5
+SET ramSize=5120M
+@ ECHO Sie haben %ramSize% RAM gewaehlt.
+GOTO :7
+
+:6
+SET ramSize=6144M
+@ ECHO Sie haben %ramSize% RAM gewaehlt.
+GOTO :7
+
+:7
+CLS
+
+@ ECHO Herzlich Wilkommen, bei unserem neuen itcraft-Launcher fuer Minecraft.
+
+@ ECHO.   
+
+@ ECHO Including:
+@ ECHO itcraft_Texturepack x512 (1.7.3)
+@ ECHO itcraft_Texturepack x128 (1.7.3)
+@ ECHO Resizable Ram options
+
+@ ECHO.
+
+@ ECHO Um Minecraft in der Original Version zu straten waehlen Sie die '1',
+@ ECHO um Minecraft in der Spoutcraft Version zu starten waehlen Sie die '2'
+
+@ ECHO. 
+
+@ ECHO 1: Minecraft
+@ ECHO 2: Spoutcraft
+@ ECHO 3: Abbrechen
+
+SET choice=
+SET /p choice=
+
+IF '%choice%' == '1' GOTO :9
+IF '%choice%' == '2' GOTO :10
+IF '%choice%' == '3' GOTO :33
+
+@ ECHO Falsche Eingabe. Bitte erneut versuchen
+GOTO :7
+
+:9
+@ ECHO Sie haben die Original Version von Minecraft gewaehlt.
+@ ECHO Minecraft wird mit %ramSize%  RAM gestartet.
+
+@ ECHO.
+
+CD %AppData%\.minecraft\itcraft\config
+
+@ ECHO ON
+
+java -Xmx%ramSize% -Xms%ramSize% -jar "./minecraft.jar
+SET game=Minecraft.jar
+
+@ ECHO OFF
+GOTO :11
+
+:10
+@ ECHO Sie haben Spoutcraft gewaehlt.
+@ ECHO Spoutcraft wird mit %ramSize% RAM gestartet.
+
+CD %AppData%\.minecraft\itcraft\config
+
+@ ECHO ON
+
+java -Xmx%ramSize% -Xms%ramSize% -jar "./spoutcraft.jar
+SET game=Spoutcraft.jar
+
+@ ECHO OFF
+GOTO :12
+
+:11
+@ ECHO.
+@ ECHO.
+
+@ ECHO Minecraft wurde geschlossen.
+GOTO :13
+
+:12
+@ ECHO.
+@ ECHO.
+
+@ ECHO Spoutcraft wurde geschlossen.
+GOTO :13
+
+:13
+@ ECHO.
+@ ECHO.
+
+@ ECHO Moechtest Du deine Einstellungen speichern ?
+
+@ ECHO.
+
+@ ECHO 1: Ja
+@ ECHO 2: Nein
+
+SET choice=
+SET /p choice=
+
+IF '%choice%' == '1' GOTO :15
+IF '%choice%' == '2' GOTO :14
+
+:14
+@  ECHO.
+
+@ ECHO Viellen Dank fuers Spielen.
+@ ECHO.
+@ ECHO Auf Wiedersehn.
+
+:15
+CD %AppData%\.minecraft\itcraft\saved_files
+
+@ ECHO %ramSize% >chosenRAMsize.txt
+@ ECHO %game% >gameType.txt
+
+exit
+
+:23
+SET /p "savedRAMsize="<"%Appdata%\.minecraft\itcraft\saved_files\chosenRAMsize.txt"
+
+SET /p "savedGameType="<"%Appdata%\.minecraft\itcraft\saved_files\gameType.txt"
+
+CD %AppData%\.minecraft\itcraft\config
+
+@ ECHO ON
+
+java -Xmx%savedRAMsize% -Xms%savedRAMsize% -jar "./%savedGameType%
+
+@ ECHO OFF
+
+@ ECHO %savedGameType% wurde geschlossen.
+
+@ ECHO.
+
+@ ECHO Viellen Dank fuers Spielen.
+@ ECHO.
+
+@ ECHO Auf Wiedersehn.
+@ ECHO.
+
+:33
+ping 127.0.0.1 -n 3 >NUL
+
+exit
+
+

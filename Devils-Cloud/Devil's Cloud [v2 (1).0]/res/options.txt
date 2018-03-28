@@ -1,0 +1,14 @@
+#Window_Settings
+Title = "Devil's Cloud pre Alpha [v0.1]"
+Min_Size = 200/200
+Default_Size = 860/700
+
+#Engine_Settings
+TicksPerSecond = 100
+V-Sync = true
+FramesPerSecond = 100
+LimiteFrameRate = false
+Redirect_Output-Streams = true;
+
+#Global_Settings
+Language = En_us

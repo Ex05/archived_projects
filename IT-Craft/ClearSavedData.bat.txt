@@ -1,0 +1,12 @@
+@ ECHO off
+
+color a
+
+CD %Appdata%\.minecraft\itcraft\saved_files
+
+IF EXIST chosenRAMsize.txt del chosenRAMsize.txt
+
+IF EXIST gameType.txt del gameType.txt
+
+IF EXIST MaxRAM.txt del MaxRAM.txt
+

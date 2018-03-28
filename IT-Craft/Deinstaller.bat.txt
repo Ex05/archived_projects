@@ -1,0 +1,32 @@
+@ ECHO ON
+
+color a
+
+CD %USERPROFILE%\Desktop 
+
+IF EXIST ReadMe.txt del ReadMe.txt
+
+IF EXIST itcraft-Launcher.bat del itcraft-Launcher.bat
+
+IF EXIST itcraft_Live-Map.website del itcraft_Live-Map.website
+
+CD %AppData%\.minecraft\texturepacks
+
+IF EXIST itcraft_texturepack.rar del itcraft_texturepack.rar
+
+CD %AppData%\.minecraft
+
+IF EXIST itcraft rmdir /S /Q itcraft
+
+CD /D %~dp0
+del Deinstaller.bat
+
+@ ECHO.
+@ ECHO.
+
+@ ECHO Das itrcaft-Erweiterungspacket, wurde erfolgreich Deinstalliert.
+
+@ ECHO.
+
+pause
+
